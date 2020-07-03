@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Karla&family=Modak&display=swap');
+
+html,body{
+    box-sizing: border-box;
+    font-family: 'Karla', sans-serif;
+    padding:0;
+    margin:0;
+}
+*, *::after, *::before{
+    box-sizing: inherit;
+}
+body{
+    background-color: #FBFBFF;
+    color:#0B4F6C; 
+}
+h1{
+    padding-left: 1em;
+}
+header{
+    background-color: #FFEEDB;
+    opacity: 0.5;
+}
+#game-view{
+    width: 500px;
+    margin: 0 auto;
+    border-radius: 15px;
+    border:5px solid #040F16;
+    z-index: -1;
+
+}
+
+#game-view-info{
+    padding: 15px;
+    font-family: sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#game-view-squares{
+    height:500px;
+    display: flex;
+    flex-wrap: wrap;
+    padding:25px;
+    box-sizing: border-box;
+}
+#game-view-squares.hideGame{
+    opacity: 0;
+}
+
+.game-view-square{
+    width: 33.33%;
+    height: 33.33%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    font-family: 'Modak', cursive;
+    font-size: 75px;
+    text-transform: uppercase;
+
+    cursor: pointer;
+    user-select: none;
+    -moz-user-select:  none;
+
+
+}
+
+
+.game-view-square.highlighted{
+    color: green;
+}
+
+.game-view-square:hover{
+    background-color: #c3c3c8;
+}
+.game-view-square:nth-child(-n + 6){
+    border-bottom: 15px solid #040F16;
+}
+.game-view-square:nth-child(3n + 1), .game-view-square:nth-child(3n + 2){
+    border-right: 15px solid #040F16;
+}
+
+.gameStop{
+    font-family: 'Modak', cursive;
+    height: 500px;
+    width: 490px;
+    /* background-color: red; */
+    position: absolute;
+    /* border: 1px solid black; */
+    top: 140px;
+    z-index: 10;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    flex-flow: column;
+    font-size: 100px;
+    text-transform: uppercase;
+    animation: fadeIn 3s ease-in forwards;
+}
+.gameStop > div:last-child{
+    font-family: 'Karla', sans-serif;
+}
+
+@keyframes fadeIn{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+button{
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.reset_btn{
+    float:left;
+    padding: 1em;
+    margin: 1em;
+    background: #040F16;
+    border-radius: 5px;
+    color: #FBFBFF;
+}
+
+.undo_btn{
+    float:right;
+    margin: 1em; 
+    background: #FBFBFF;
+    font-size: 1.5em;
+    color: #040F16;
+}
+.again_btn{
+    padding: 1em;
+    border-radius: 5px;
+}
+button:disabled{
+    opacity: 0.4;
+}

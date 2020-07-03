@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Tic Tac Toe</title>
+        <link rel="stylesheet" href="css/master.css"/>
+        <script src="https://kit.fontawesome.com/5d26a78092.js" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <header>
+            <h1>MarL TIC TAC TOE</h1>
+        </header>
+        <div id="game-view">
+            <div id="game-view-info">
+                <div>Tic Tac Toe</div>
+                <div> {{ infoMessage }}</div>      
+            </div>
+           
+            <!-- <div id="game-view-squares" v-bind:class="{gameStop:isgameStop}"> -->
+            <div id="game-view-squares" v-bind:class="{hideGame:isgameStop}">
+                <div
+                    v-for="(square,i) in activeGame.squares"
+                    v-on:click = "activeGame.makeMove(i)"
+                    v-bind:class="{ highlighted: square.isHighlighted }"
+                    class="game-view-square">
+                    {{ square.value }}
+                </div>
+            </div>
+            <div v-bind:class="{gameStop:isgameStop}">
+                <div>{{activeGame.winner}}</div>
+                <div v-if="isgameStop">
+                    <div>Wins</div>
+                    <button class="again_btn" v-on:click="resetGame();">Play Again?</button>
+                </div>
+                <div v-else></div>
+            </div>
+            <button class="reset_btn" v-on:click="resetGame();">Reset</button>
+            <button v-on:click="undoMove();" :disabled="isdisabled" title="Undo" class="undo_btn"><i class="fas fa-undo"></i>Undo</button>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue" charset="utf-8"></script>
+        <script src="js/Game.js"></script>
+        <script src="js/Square.js"></script>
+        <script>
+            //let activeGame = new Game();     
+            let gameVue = new Vue({
+                el: '#game-view',
+                data : {
+                    activeGame : new Game(),
+                    isdisabled : false,
+                    isgameStop : false
+                },
+                computed: {
+                    infoMessage: function(){
+                        if(this.activeGame.inProgress){
+                            return 'It is ' + this.activeGame.currentTurn + ' turn';
+                        }
+
+                        if(this.activeGame.winner){
+                            this.isgameStop = true;
+                            this.isdisabled = true;
+                            return this.activeGame.winner + ' wins!';
+                            
+                        }
+
+                        if(!this.activeGame.winner && !this.activeGame.inProgress){
+                            this.isdisabled = true;
+                            return 'It was a draw';
+                            
+                        }
+              
+                    }
+                },
+                methods: {
+                    resetGame : function(){
+                        console.log(this.activeGame);
+                        //console.log(this.data);
+                        //Make the movesMade to go back to zero and reset the value of every square to null
+                        this.isgameStop = false;
+                        this.activeGame.movesMade = 0;
+                        this.activeGame.winner = null;
+                        this.activeGame.inProgress = true;
+                        this.activeGame.moveHistory = [];
+                        this.activeGame.squares.forEach(element => {
+                            element.value = null;
+                            element.isHighlighted = false;
+                        });
+                        this.isdisabled = false;
+                        this.isgameStop = false;
+                        
+                    },
+                    undoMove : function (){
+                        let square_click = this.activeGame.moveHistory.pop();
+                        this.activeGame.squares[square_click].value = null;
+                        this.activeGame.squares[square_click].isHighlighted = false;
+                        this.activeGame.movesMade--;
+                        this.activeGame.currentTurn = (this.activeGame.currentTurn === Game.O) ? Game.X : Game.O;
+                       
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
