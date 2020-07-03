@@ -91,9 +91,9 @@
                         
                     },
                     undoMove : function (){
-                        let square_undo = this.activeGame.moveHistory.pop();
-                        this.activeGame.squares[square_undo].value = null;
-                        this.activeGame.squares[square_undo].isHighlighted = false;
+                        let square_click = this.activeGame.moveHistory.pop();
+                        this.activeGame.squares[square_click].value = null;
+                        this.activeGame.squares[square_click].isHighlighted = false;
                         this.activeGame.movesMade--;
                         this.activeGame.currentTurn = (this.activeGame.currentTurn === Game.O) ? Game.X : Game.O;
                        
